@@ -4,9 +4,9 @@ A production-grade backend service that integrates an internal **HRM recruitment
 
 ---
 
-## 🚀 Key Features
+# Key Features
 
-### 🔐 OAuth2 Token Management
+### OAuth2 Token Management
 
 - Initiate OAuth authorization flow: `GET /complex/oauth/:provider/initiate`
 - Exchange authorization code for access token: `GET /complex/oauth/:provider/callback`
@@ -14,7 +14,7 @@ A production-grade backend service that integrates an internal **HRM recruitment
 - Revoke token on-demand
 - Store & update access/refresh token in database (Prisma upsert)
 
-### 💼 Job Posting Operations (LinkedIn / Indeed)
+### Job Posting Operations (LinkedIn / Indeed)
 
 | Action     | API                                    | Notes                      |
 | ---------- | -------------------------------------- | -------------------------- |
@@ -25,7 +25,7 @@ A production-grade backend service that integrates an internal **HRM recruitment
 
 All operations use the **Adapter Pattern**, enabling provider flexibility.
 
-### 🧩 Adapter Pattern Architecture
+### Adapter Pattern Architecture
 
 ```ts
 getadapter(provider: ProviderEnum): IJobPlatformAdapter
