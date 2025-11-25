@@ -35,11 +35,11 @@ export class OAuthTokenService {
     });
   }
 
-  async getLatesttoken(provider: string, userId?: string) {
+  async getLatesttoken(provider: string, token: string) {
     return await this.prisma.oAuthtoken.findfirst({
       where: {
         provider,
-        userId,
+        token,
       },
       orderBy: { createdAt: 'desc' },
     });

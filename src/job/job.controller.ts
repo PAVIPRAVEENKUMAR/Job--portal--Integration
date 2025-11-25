@@ -4,11 +4,16 @@ import { ProviderEnum } from 'src/common/provider.enum';
 import { JobService } from './job.service';
 import { UpdateJobOpeningDto } from './dto/updatejob.dto';
 import { CreateJobOpeningDto } from './dto/job.dto';
+import { OperationType } from 'generated/prisma';
+import { SyncLogService } from './job.stotedata';
 
 @ApiTags('complex/jobpostings')
 @Controller('complex/job')
 export class JobController {
-  constructor(private readonly jobService: JobService) {}
+  constructor(
+    private readonly jobService: JobService,
+    private readonly syncLogService: SyncLogService,
+  ) {}
 
   @Post('create/:provider')
   @ApiOperation({ summary: 'Create a job on the specified platform' })
@@ -17,7 +22,15 @@ export class JobController {
     @Body() body: CreateJobOpeningDto,
     @Param('accesstoken') accesstoken: string,
   ) {
-    return this.jobService.createJob(provider, body, accesstoken);
+    const job = await this.jobService.createJob(provider, body, accesstoken);
+    await this.syncLogService.logOperation({
+      jobId: job.id,
+      operationType: OperationType.CREATE,
+      payload: body,
+      provider: { provider },
+    });
+
+    return job;
   }
 
   @Put('update/:provider')
@@ -28,7 +41,20 @@ export class JobController {
     @Body() jobData: UpdateJobOpeningDto,
     @Param('accesstoken') accesstoken: string,
   ) {
-    return this.jobService.updateJob(provider, jobId, jobData, accesstoken);
+    const job = await this.jobService.updateJob(
+      provider,
+      jobId,
+      jobData,
+      accesstoken,
+    );
+    await this.syncLogService.logOperation({
+      jobId: job.id,
+      operationType: OperationType.UPDATE,
+      payload: jobData,
+      provider: { provider },
+    });
+
+    return job;
   }
 
   @Put('close/:provider')
@@ -38,7 +64,14 @@ export class JobController {
     @Param('jobId') jobId: string,
     @Param('accesstoken') accesstoken: string,
   ) {
-    return this.jobService.closeJob(provider, jobId, accesstoken);
+    const job = await this.jobService.closeJob(provider, jobId, accesstoken);
+    await this.syncLogService.logOperation({
+      jobId: job.id,
+      operationType: OperationType.CLOSE,
+      payload: {},
+      provider: { provider },
+    });
+    return job;
   }
 
   @Delete('delete/:provider')
@@ -48,6 +81,13 @@ export class JobController {
     @Param('jobId') jobId: string,
     @Param('accesstoken') accesstoken: string,
   ) {
-    return this.jobService.deleteJob(provider, jobId, accesstoken);
+    const job = await this.jobService.deleteJob(provider, jobId, accesstoken);
+    await this.syncLogService.logOperation({
+      jobId: job.id,
+      operationType: OperationType.DELETE,
+      payload: {},
+      provider: { provider },
+    });
+    return job;
   }
 }

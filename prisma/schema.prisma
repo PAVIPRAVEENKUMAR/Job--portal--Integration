@@ -28,3 +28,30 @@ model OAuthToken {
   @@unique([userId, provider])
 }
 
+model JobSyncOperationLog {
+  id             String     @id @default(uuid())
+  jobId          String
+  operationType  OperationType
+  payload        Json
+  provider       String
+  status         SyncStatus @default(PENDING)
+  response       Json?
+  error          String?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+enum OperationType {
+  CREATE
+  UPDATE
+  CLOSE
+  DELETE
+}
+
+enum SyncStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+

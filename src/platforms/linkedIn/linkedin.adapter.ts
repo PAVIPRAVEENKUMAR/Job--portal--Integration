@@ -65,6 +65,7 @@ export class LinkedinAdapter implements IJobPlatformAdapter {
         refresh_token,
         expires_in,
         userId: org_id,
+        refreshTokenExpiresAt: undefined,
       };
     } catch (error) {
       throw new InternalServerErrorException(
