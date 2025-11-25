@@ -5,17 +5,19 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe({whitelist:true}));
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
   const config = new DocumentBuilder()
-  .setTitle('Job Platform API')
-  .setDescription('LinkedIn OAuth API for Job Posting')
-  .setVersion('1.0')
-  .addTag('Job Platform')
-  .build()
+    .setTitle('Job portalintehration mock')
+    .setDescription(
+      'Mock deployment of OAuth + Job Posting platform integration',
+    )
+    .setVersion('1.0')
+    .addTag('Job Platform')
+    .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api',app, document)
+  SwaggerModule.setup('api', app, document);
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

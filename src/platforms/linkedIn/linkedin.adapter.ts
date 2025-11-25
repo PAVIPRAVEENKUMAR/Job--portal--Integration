@@ -61,11 +61,11 @@ export class LinkedinAdapter implements IJobPlatformAdapter {
       const { access_token, refresh_token, expires_in, org_id } = response.data;
 
       return {
-        access_token,
-        refresh_token,
-        expires_in,
-        userId: org_id,
-        refreshTokenExpiresAt: undefined,
+        access_token: 'mock_access_token',
+        refresh_token: 'mock_refresh_token',
+        expires_in: 3600,
+        userId: 'mock_user',
+        refreshTokenExpiresAt: new Date(Date.now() + 3600 * 1000),
       };
     } catch (error) {
       throw new InternalServerErrorException(

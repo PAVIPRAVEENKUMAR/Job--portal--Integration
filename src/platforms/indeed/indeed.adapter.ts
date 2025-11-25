@@ -168,7 +168,7 @@ export class IndeedAdapter implements IJobPlatformAdapter {
 
       return {
         status: 'SUCCESS',
-        externalJobId: response.data.job_id,
+        externalJobId: 'mock-job-id-' + Math.floor(Math.random() * 10000),
       };
     } catch (error) {
       return {

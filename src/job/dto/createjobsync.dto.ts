@@ -1,5 +1,5 @@
 import { IsEnum, IsJSON, IsNotEmpty, IsString } from 'class-validator';
-import { OperationType } from '@prisma/client';
+import { OperationType } from '../job.enum';
 
 export class CreateSyncLogDto {
   @IsString()
@@ -16,4 +16,3 @@ export class CreateSyncLogDto {
   @IsNotEmpty()
   provider: string;
 }
-

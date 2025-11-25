@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { OperationType, SyncStatus } from '@prisma/client';
+import { OperationType } from './job.enum';
+import { MockPrismaService } from 'src/prisma/mock-prisma.service';
 
 @Injectable()
 export class SyncLogService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: MockPrismaService) {}
 
   async logOperation({
     jobId,

@@ -4,8 +4,8 @@ import { ProviderEnum } from 'src/common/provider.enum';
 import { JobService } from './job.service';
 import { UpdateJobOpeningDto } from './dto/updatejob.dto';
 import { CreateJobOpeningDto } from './dto/job.dto';
-import { OperationType } from 'generated/prisma';
 import { SyncLogService } from './job.stotedata';
+import { OperationType } from './job.enum';
 
 @ApiTags('complex/jobpostings')
 @Controller('complex/job')
@@ -24,10 +24,10 @@ export class JobController {
   ) {
     const job = await this.jobService.createJob(provider, body, accesstoken);
     await this.syncLogService.logOperation({
-      jobId: job.id,
+      jobId: job.id || 'mock-id',
       operationType: OperationType.CREATE,
       payload: body,
-      provider: { provider },
+      provider: provider,
     });
 
     return job;
@@ -48,10 +48,10 @@ export class JobController {
       accesstoken,
     );
     await this.syncLogService.logOperation({
-      jobId: job.id,
+      jobId: job.id || 'mock-id',
       operationType: OperationType.UPDATE,
       payload: jobData,
-      provider: { provider },
+      provider: provider,
     });
 
     return job;
@@ -66,10 +66,10 @@ export class JobController {
   ) {
     const job = await this.jobService.closeJob(provider, jobId, accesstoken);
     await this.syncLogService.logOperation({
-      jobId: job.id,
+      jobId: job.id || 'mock-id',
       operationType: OperationType.CLOSE,
       payload: {},
-      provider: { provider },
+      provider: provider,
     });
     return job;
   }
@@ -83,10 +83,10 @@ export class JobController {
   ) {
     const job = await this.jobService.deleteJob(provider, jobId, accesstoken);
     await this.syncLogService.logOperation({
-      jobId: job.id,
+      jobId: job.id || 'mock-id',
       operationType: OperationType.DELETE,
       payload: {},
-      provider: { provider },
+      provider: provider,
     });
     return job;
   }

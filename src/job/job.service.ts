@@ -3,7 +3,7 @@ import { JobAdapterFactory } from 'src/common/job-adapter.factory';
 import { IJobPlatformAdapter } from 'src/common/job.platform.adapter.interface';
 import { ProviderEnum } from 'src/common/provider.enum';
 import { CreateJobOpeningDto } from './dto/job.dto';
-import { JobPostResult } from 'src/common/interfaces/commoninterface.dto';
+import { JobPostResult } from 'src/common/commoninterface.dto';
 import { UpdateJobOpeningDto } from './dto/updatejob.dto';
 
 @Injectable()

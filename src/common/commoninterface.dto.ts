@@ -1,5 +1,6 @@
 export interface JobPostResult {
   externalJobId?: string;
+  id?: string;
   status: 'SUCCESS' | 'FAILED';
   error?: any;
 }

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { MockPrismaService } from '../prisma/mock-prisma.service';
 
 @Injectable()
 export class OAuthTokenService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: MockPrismaService) {}
 
   async saveToken(
     provider: string,
@@ -36,7 +36,7 @@ export class OAuthTokenService {
   }
 
   async getLatesttoken(provider: string, token: string) {
-    return await this.prisma.oAuthtoken.findfirst({
+    return await this.prisma.oAuthtoken.findFirst({
       where: {
         provider,
         token,

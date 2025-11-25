@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
-import { PrismaService } from '../prisma/prisma.service';
+import { MockPrismaService } from 'src/prisma/mock-prisma.service';
 import { subMinutes, isBefore } from 'date-fns';
 import { LinkedinAdapter } from 'src/platforms/linkedIn/linkedin.adapter';
 import { IndeedAdapter } from 'src/platforms/indeed/indeed.adapter';
@@ -10,12 +10,12 @@ export class TokenRefreshService {
   private readonly logger = new Logger(TokenRefreshService.name);
 
   constructor(
-    private prisma: PrismaService,
+    private prisma: MockPrismaService,
     private linkedin: LinkedinAdapter,
     private indeed: IndeedAdapter,
   ) {}
 
-  @Cron('*/30 * * * *')
+  //@Cron('*/30 * * * *')
   async refreshTokens() {
     const tokens = await this.prisma.oAuthToken.findMany();
 
