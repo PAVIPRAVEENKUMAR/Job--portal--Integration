@@ -1,33 +1,101 @@
-# Job Portal Integration Service (NestJS + OAuth2 + Adapter Pattern + Prisma)
+Job Portal Integration API (LinkedIn & Indeed OAuth Integration)
 
-A production-grade backend service that integrates an internal **HRM recruitment system** with external **job portals** such as **LinkedIn** and **Indeed**, enabling job posting and token lifecycle management. Built using **NestJS**, **Prisma**, **OAuth2 Authorization Code Flow**, and a **scalable Adapter Pattern** that allows easy extension to additional job platforms.
+A scalable backend service designed to integrate external job posting platforms such as LinkedIn and Indeed, supporting OAuth authentication, token lifecycle management, and unified job posting operations. This project demonstrates advanced backend architecture built using NestJS, Adapter Design Pattern, DTO validation, and Mock deployment for professional portfolio presentation.
 
----
+🚀 Live Deployment
 
-# Key Features
+Service URL
+Base URL https://job-portal-integration.onrender.com
 
-### OAuth2 Token Management
+Swagger UI https://job-portal-integration.onrender.com/api
 
-- Initiate OAuth authorization flow: `GET /complex/oauth/:provider/initiate`
-- Exchange authorization code for access token: `GET /complex/oauth/:provider/callback`
-- Refresh access token before expiry (auto via Cron every 30 min)
-- Revoke token on-demand
-- Store & update access/refresh token in database (Prisma upsert)
+🧾 Features
 
-### Job Posting Operations (LinkedIn / Indeed)
+🔐 OAuth 2.0 Authorization Code Flow (Mocked)
 
-| Action     | API                                    | Notes                      |
-| ---------- | -------------------------------------- | -------------------------- |
-| Create job | `POST /complex/job/create/:provider`   | Uses `adapter.postJob()`   |
-| Update job | `PUT /complex/job/update/:provider`    | Uses `adapter.updateJob()` |
-| Close job  | `PUT /complex/job/close/:provider`     | Uses `adapter.closeJob()`  |
-| Delete job | `DELETE /complex/job/delete/:provider` | Uses `adapter.deleteJob()` |
+🔄 Token Refresh & Revocation Flow
 
-All operations use the **Adapter Pattern**, enabling provider flexibility.
+🏢 Multi-provider Adapters (LinkedIn / Indeed)
 
-### Adapter Pattern Architecture
+📦 Create / Update / Close / Delete Job Postings
 
-```ts
-getadapter(provider: ProviderEnum): IJobPlatformAdapter
-getAuthenticatedAdapter(provider: ProviderEnum, accesstoken: string): IJobPlatformAdapter
-```
+🔥 Adapter Pattern for platform abstraction
+
+🧵 DTO Validation using class-validator
+
+📊 Mock Prisma-style persistence service
+
+🧭 Swagger API Documentation
+
+🛠 Tech Stack
+
+Category Technology
+Backend Framework NestJS
+Language TypeScript
+Design Patterns Adapter, Factory Pattern
+API Docs Swagger (OpenAPI)
+Mock Storage In-memory mock Prisma service
+Deployment Render
+HTTP Client Axios / Nest HttpService
+
+📚 API Endpoints Overview
+
+OAuth Endpoints
+
+Method Endpoint Description
+GET /complex/oauth/:provider/initiate Start OAuth flow
+GET /complex/oauth/:provider/callback Handle provider callback
+GET /complex/oauth/:provider/token Retrieve latest access token
+GET /complex/oauth/:provider/refreshtoken Refresh access token
+POST /complex/oauth/:provider/revoke Revoke token
+
+Job Posting Endpoints
+
+Method Endpoint Description
+POST /complex/job/create/:provider Create job posting
+PUT /complex/job/update/:provider Update posting
+PUT /complex/job/close/:provider Close posting
+DELETE /complex/job/delete/:provider Remove posting
+
+📦 Mock Response Example
+{
+"status": "SUCCESS",
+"externalJobId": "mock-job-id-3940"
+}
+
+📁 Folder Structure
+src
+├── Auth
+├── common
+├── job
+├── platforms
+│ ├── linkedIn
+│ └── indeed
+├── prisma (mock service)
+└── main.ts
+
+🧑‍💻 Project Setup
+
+git clone https://github.com/PAVIPRAVEENKUMAR/Job--portal--Integration
+cd Job--portal--Integration
+npm install
+npm run start:dev
+
+🧠 Design Decisions
+
+Adapter Factory decouples job platform behavior
+
+Mock prisma allows deployment without DB
+
+Swagger UI provides easy API testing
+
+Clean DTO & validation ensures stable request structure
+
+👤 Author
+
+Praveen Kumar M
+Backend Developer — NestJS • Node.js • REST APIs
+📍 India
+🔗 LinkedIn: https://linkedin.com/in/praveenkumar-m-yoga-dev
+
+📧 Email: praveenselfless@gmail.com

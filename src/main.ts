@@ -8,7 +8,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
   const config = new DocumentBuilder()
-    .setTitle('Job portalintehration mock')
+    .setTitle('Job portal integration Mock')
     .setDescription(
       'Mock deployment of OAuth + Job Posting platform integration',
     )
